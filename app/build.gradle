@@ -61,5 +61,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
     // ui test dependencies
-    testImplementation 'junit:junit:4.12'
+    testImplementation"org.junit.jupiter:junit-jupiter:${versions.jUnit5}"
+    testImplementation"org.junit.jupiter:junit-jupiter-api:${versions.jUnit5}"
 }
