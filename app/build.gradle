@@ -5,16 +5,35 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion project.ext.appCompileSdkVersion
+
+    def latestGitCommitSha = "\"${getLatestGitCommitSha()}\""
+    def latestBuildTime = "\"${getLatestBuildTime()}\""
+
     defaultConfig {
-        applicationId "co.tunjos.rxmpvvm"
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId project.ext.appApplicationId
+        minSdkVersion project.ext.appMinSdkVersion
+        targetSdkVersion project.ext.appTargetSdkVersion
+        versionCode project.ext.appVersionCode
+        versionName project.ext.appVersionName
+
+        testInstrumentationRunner project.ext.appTestInstrumentationRunner
+
+        buildConfigField("String", "latestGitCommitSha", latestGitCommitSha)
+        buildConfigField("String", "latestBuildTime", latestBuildTime)
+
+        printf("\n------------- " + applicationId + " -------------")
+        printf("\nversionName: " + versionName)
+        printf("\nversionCode: " + versionCode)
+
+        printf("\nlatestGitCommitSha: " + latestGitCommitSha)
+        printf("\nlatestBuildTime: " + latestBuildTime + "\n\n")
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix " -" + latestGitCommitSha.tr('\"', ' ')
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -24,12 +43,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // 3rd party dependencies
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+
+    // google android dependencies
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.core:core-ktx:1.1.0-alpha04'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.google.android.material:material:1.0.0-beta01'
-    testImplementation 'junit:junit:4.12'
+
+    // unit test dependencies
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
+    // ui test dependencies
+    testImplementation 'junit:junit:4.12'
 }
