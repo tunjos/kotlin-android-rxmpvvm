@@ -44,6 +44,7 @@ allprojects {
 
     ext {
         versions = [
+                dagger  : '2.21',
                 jUnit5  : '5.4.0',
                 retrofit: '2.5.0',
         ]

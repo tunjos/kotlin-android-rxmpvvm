@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion project.ext.appCompileSdkVersion
@@ -50,6 +49,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 
     // google android dependencies
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.core:core-ktx:1.1.0-alpha04'
@@ -63,4 +64,15 @@ dependencies {
     // ui test dependencies
     testImplementation"org.junit.jupiter:junit-jupiter:${versions.jUnit5}"
     testImplementation"org.junit.jupiter:junit-jupiter-api:${versions.jUnit5}"
+}
+
+kapt {
+//    option('-Adagger.fastInit=enabled')
+    useBuildCache = true
+    javacOptions {
+        // Increase the max count of errors from annotation processors.
+        // Default is 100.
+        option("-Xmaxerrs", 500)
+        option("-Xmaxwarns", 500)
+    }
 }
