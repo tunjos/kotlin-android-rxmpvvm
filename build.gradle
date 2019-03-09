@@ -54,6 +54,7 @@ allprojects {
                 dagger  : '2.21',
                 jUnit5  : '5.4.0',
                 material: '1.0.0',
+                okhttp  : '3.13.1',
                 retrofit: '2.5.0',
         ]
     }
