@@ -38,6 +38,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -78,5 +83,9 @@ kapt {
         // Default is 100.
         option("-Xmaxerrs", 500)
         option("-Xmaxwarns", 500)
+        // Code formatting should be disabled only during development, not in
+        // production code or continuous integration tests.
+//        option('-Adagger.formatGeneratedSource=disabled')
     }
+
 }
