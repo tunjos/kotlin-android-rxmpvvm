@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface GithubService {
+interface GithubApi {
 
     @GET("users/{username}/repos")
     fun getRepos(@Path("username") username: String): Single<Response<List<Repo>>>
@@ -17,5 +17,6 @@ interface GithubService {
     companion object {
         val USERNAME_GITHUB = "github"
         val ACCEPT_HEADER_JSON = "application/vnd.github.v3+json"
+        val GITHUB_API_BASE_URL = "https://api.github.com"
     }
 }
