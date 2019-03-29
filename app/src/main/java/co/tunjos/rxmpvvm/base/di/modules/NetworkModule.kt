@@ -1,4 +1,4 @@
-package co.tunjos.rxmpvvm.base.di
+package co.tunjos.rxmpvvm.base.di.modules
 
 import android.content.Context
 import co.tunjos.rxmpvvm.BuildConfig
@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-object NetworkModule {
+class NetworkModule {
 
     private val CACHE_SIZE = 20 * 1024 * 1024 //20MB
 
