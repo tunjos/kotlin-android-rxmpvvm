@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">kotlin-android-rxmpvvm</string>
-    <string name="action_settings">Settings</string>
+
+    <!-- MainActivity -->
+    <string name="empty_repositories">Empty repositories</string>
+    <string name="action_about">About</string>
+
+    <!-- Username Dialog -->
+    <string name="github">GitHub</string>
+    <string name="username">Username</string>
+    <string name="username_empty">Username is empty</string>
+
+    <!-- RepoActivity -->
+    <string name="repo">Repo</string>
+    <string name="watch">Watch</string>
+    <string name="star">Star</string>
+    <string name="fork">Fork</string>
+    <string name="slash">"/"</string>
+
 </resources>
