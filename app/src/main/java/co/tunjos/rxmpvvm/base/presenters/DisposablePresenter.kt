@@ -1,8 +1,9 @@
-package co.tunjos.rxmpvvm.base
+package co.tunjos.rxmpvvm.base.presenters
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import io.reactivex.disposables.Disposable
 
 /**
  * A presenter that listens to [@OnLifecycleEvent]s [Lifecycle.Event.ON_CREATE] and [Lifecycle.Event.ON_DESTROY] and
@@ -15,7 +16,8 @@ import androidx.lifecycle.OnLifecycleEvent
 interface DisposablePresenter {
 
     /**
-     * Subscribe to reactive event sources here.
+     * Subscribe to reactive event sources here. Should call [Disposable.disposeWith] at the end of each reactive
+     * subscription.
      */
     fun createSubscriptions()
 

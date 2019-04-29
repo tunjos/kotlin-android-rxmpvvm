@@ -15,6 +15,9 @@ interface GithubApi {
     fun getRepo(@Path("owner") owner: String, @Path("repo") repo: String): Single<Response<Repo>>
 
     companion object {
+        const val HTTP_CODE_200 = 200
+        const val HTTP_CODE_404 = 404
+
         val USERNAME_GITHUB = "github"
         val ACCEPT_HEADER_JSON = "application/vnd.github.v3+json"
         val GITHUB_API_BASE_URL = "https://api.github.com"

@@ -1,6 +1,6 @@
 package co.tunjos.rxmpvvm.base.mvvm.uievents
 
-import co.tunjos.rxmpvvm.base.BaseDisposablePresenter
+import co.tunjos.rxmpvvm.base.presenters.BaseDisposablePresenter
 
 /**
  * Represents an event that is generated from the UI component and automatically or manually delivered to a

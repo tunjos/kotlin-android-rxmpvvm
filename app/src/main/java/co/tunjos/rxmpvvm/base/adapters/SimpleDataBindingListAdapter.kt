@@ -27,7 +27,7 @@ import io.reactivex.subjects.PublishSubject
  * implementation generates  [RecyclerViewListItemClickEvent]  [UiEvent]s when the a list item's root view is clicked.
  * @param itemsHolder The holder for the items of this adapter.
  */
-class SimpleDataBindingListAdapter<VM : Any>(
+open class SimpleDataBindingListAdapter<VM : Any>(
     @LayoutRes
     private val layoutResId: Int,
     private val modelVariable: Int,
