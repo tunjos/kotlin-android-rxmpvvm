@@ -58,6 +58,7 @@ allprojects {
                 retrofit: '2.5.0',
                 rxAndroid: '2.1.1',
                 rxJava: '2.2.8',
+                timber: '4.7.1',
         ]
     }
 }

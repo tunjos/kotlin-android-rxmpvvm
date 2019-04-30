@@ -6,6 +6,8 @@ import co.tunjos.rxmpvvm.base.di.components.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import timber.log.Timber.DebugTree
+import timber.log.Timber.plant
 import javax.inject.Inject
 
 class KotlinAndroidRxMpvvmApplication : Application(), HasActivityInjector {
@@ -19,6 +21,10 @@ class KotlinAndroidRxMpvvmApplication : Application(), HasActivityInjector {
         DaggerApplicationComponent.builder()
             .create(this)
             .inject(this)
+
+        if (BuildConfig.DEBUG) {
+            plant(DebugTree())
+        }
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

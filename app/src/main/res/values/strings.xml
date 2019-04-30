@@ -3,6 +3,7 @@
 
     <!-- MainActivity -->
     <string name="empty_repositories">Empty repositories</string>
+    <string name="error_loading_repositories">Error loading repositories</string>
     <string name="action_about">About</string>
 
     <!-- Username Dialog -->

@@ -1,10 +1,10 @@
 package co.tunjos.rxmpvvm.main.viewmodels
 
+import androidx.annotation.StringRes
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import co.tunjos.rxmpvvm.R
 import co.tunjos.rxmpvvm.base.di.scopes.ActivityScope
 import javax.inject.Inject
 
@@ -20,12 +20,12 @@ class MainViewModel @Inject constructor() {
     val messageViewText = ObservableField<String>()
 
 
-    fun showEmptyRepoMessage() {
-        messageViewTextId.set(R.string.empty_repositories)
+    fun showMessage(msg: String? = null) {
+        messageViewText.set(msg)
     }
 
-    fun showMessage(msg: String) {
-        messageViewText.set(msg)
+    fun showMessageWithId(@StringRes resId: Int = 0) {
+        messageViewTextId.set(resId)
     }
 
     fun updateRepos(repos: List<RepoViewModel>) {

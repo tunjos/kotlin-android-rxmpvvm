@@ -1,5 +1,6 @@
 package co.tunjos.rxmpvvm.main.presenters
 
+import co.tunjos.rxmpvvm.R
 import co.tunjos.rxmpvvm.api.GithubApi
 import co.tunjos.rxmpvvm.base.ResponseBodyConverter
 import co.tunjos.rxmpvvm.base.di.qualifiers.IoScheduler
@@ -16,6 +17,7 @@ import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import okhttp3.ResponseBody
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -52,23 +54,20 @@ class MainPresenter @Inject constructor(
                     } else {
                         mainViewModel.reposRecyclerViewVisibility.set(false)
                         mainViewModel.messageViewVisibility.set(true)
-                        mainViewModel.showEmptyRepoMessage()
+                        mainViewModel.showMessageWithId(R.string.empty_repositories)
                     }
                 } else if (it.code() == GithubApi.HTTP_CODE_404) {
                     val errorBody: ResponseBody? = it.errorBody()
                     errorBody?.let { responseBody ->
                         val apiError = responseBodyConverter.convertToApiError(responseBody)
                         mainViewModel.messageViewVisibility.set(true)
-                        apiError?.message?.let { msg ->
-                            mainViewModel.showMessage(msg)
-                        }
+                        mainViewModel.showMessage(apiError?.message)
                     }
                 }
-
             }, {
-                /* Logger*/
-
+                Timber.e(it)
                 updateProgressBarVisibility(false)
+                mainViewModel.showMessage()
             })
             .disposeWith(compositeDisposable)
     }
