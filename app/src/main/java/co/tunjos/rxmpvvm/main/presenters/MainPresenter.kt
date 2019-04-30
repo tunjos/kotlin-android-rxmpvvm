@@ -3,12 +3,16 @@ package co.tunjos.rxmpvvm.main.presenters
 import co.tunjos.rxmpvvm.R
 import co.tunjos.rxmpvvm.api.GithubApi
 import co.tunjos.rxmpvvm.base.ResponseBodyConverter
+import co.tunjos.rxmpvvm.base.di.qualifiers.ActivityUiEvents
 import co.tunjos.rxmpvvm.base.di.qualifiers.IoScheduler
 import co.tunjos.rxmpvvm.base.di.qualifiers.UiScheduler
 import co.tunjos.rxmpvvm.base.mvvm.presenteractions.PresenterAction
+import co.tunjos.rxmpvvm.base.mvvm.uievents.UiEvent
+import co.tunjos.rxmpvvm.base.mvvm.uievents.ViewClickEvent
 import co.tunjos.rxmpvvm.base.presenters.BaseDisposablePresenter
 import co.tunjos.rxmpvvm.base.repo.GithubRepository
 import co.tunjos.rxmpvvm.extensions.rx.disposeWith
+import co.tunjos.rxmpvvm.main.actions.ShowUserNameDialogAction
 import co.tunjos.rxmpvvm.main.viewmodels.MainViewModel
 import co.tunjos.rxmpvvm.main.viewmodels.mappers.RepoViewModelMapper
 import co.tunjos.rxmpvvm.model.Repo
@@ -22,6 +26,7 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
     override val compositeDisposable: CompositeDisposable,
+    @ActivityUiEvents private val uiEvents: Observable<UiEvent>,
     @IoScheduler private val ioScheduler: Scheduler,
     @UiScheduler private val uiScheduler: Scheduler,
     private val githubRepository: GithubRepository,
@@ -35,6 +40,12 @@ class MainPresenter @Inject constructor(
 
     override fun createSubscriptions() {
         getRepos(GithubApi.USERNAME_GITHUB)
+
+        uiEvents
+            .ofType(ViewClickEvent::class.java)
+            .filter { it.id == R.id.fab_username }
+            .subscribe { emitter.onNext(ShowUserNameDialogAction) }
+            .disposeWith(compositeDisposable)
     }
 
     fun getRepos(username: String) {
@@ -42,9 +53,14 @@ class MainPresenter @Inject constructor(
             .getRepos(username = username)
             .subscribeOn(ioScheduler)
             .observeOn(uiScheduler)
-            .doOnSubscribe { updateProgressBarVisibility(true) }
+            .doOnSubscribe {
+                mainViewModel.reposRecyclerViewVisibility.set(false)
+                mainViewModel.repos.clear()
+                updateProgressBarVisibility(true)
+            }
             .subscribe({
                 updateProgressBarVisibility(false)
+                mainViewModel.reposRecyclerViewVisibility.set(true)
 
                 if (it.isSuccessful && it.code() == GithubApi.HTTP_CODE_200) {
                     val repos: List<Repo>? = it.body()
