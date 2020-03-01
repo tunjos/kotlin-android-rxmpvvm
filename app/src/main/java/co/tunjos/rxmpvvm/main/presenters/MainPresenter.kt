@@ -66,7 +66,8 @@ class MainPresenter @Inject constructor(
                     val repos: List<Repo>? = it.body()
                     if (!repos.isNullOrEmpty()) {
                         mainViewModel.reposRecyclerViewVisibility.set(true)
-                        mainViewModel.updateRepos(repos.map { repo -> repoViewModelMapper.toRepoViewModel(repo) })
+                        mainViewModel.updateRepos(
+                            repos.map { repo -> repoViewModelMapper.toRepoViewModel(repo) })
                     } else {
                         mainViewModel.reposRecyclerViewVisibility.set(false)
                         mainViewModel.messageViewVisibility.set(true)

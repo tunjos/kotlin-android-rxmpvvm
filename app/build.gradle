@@ -76,12 +76,14 @@ dependencies {
     implementation "com.google.android.material:material:$versions.material"
 
     // unit test dependencies
-    androidTestImplementation "androidx.test:runner:$versions.androidx.runner"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.androidx.espresso_core"
-
-    // ui test dependencies
     testImplementation "org.junit.jupiter:junit-jupiter:$versions.jUnit5"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$versions.jUnit5"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito_kotlin"
+    testImplementation "org.assertj:assertj-core:$versions.assertj"
+
+    // ui test dependencies
+    androidTestImplementation "androidx.test:runner:$versions.androidx.runner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.androidx.espresso_core"
 }
 
 kapt {
